@@ -8,12 +8,26 @@ output: html_document
 ```{r Front Matter}
 
 # libraries
+library(tidyverse)
+
 
 library(mdsr)
 
 # load data
 
+
+
+
 # define functions
+
+
+```
+
+
+
+```{r}
+
+
 
 
 ```
