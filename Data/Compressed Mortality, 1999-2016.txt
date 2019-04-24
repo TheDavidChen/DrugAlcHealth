@@ -1,0 +1,93 @@
+"Notes"	"State"	"State Code"	Deaths	Population	Crude Rate
+	"Alabama"	"01"	754	4863300	15.5039
+	"Alaska"	"02"	142	741894	19.1402
+	"Arizona"	"04"	1418	6931071	20.4586
+	"Arkansas"	"05"	382	2988248	12.7834
+	"California"	"06"	4806	39250017	12.2446
+	"Colorado"	"08"	965	5540545	17.4171
+	"Connecticut"	"09"	1002	3576452	28.0166
+	"Delaware"	"10"	279	952065	29.3047
+	"District of Columbia"	"11"	261	681170	38.3164
+	"Florida"	"12"	4768	20612439	23.1317
+	"Georgia"	"13"	1411	10310371	13.6852
+	"Hawaii"	"15"	189	1428557	13.2301
+	"Idaho"	"16"	224	1683140	13.3085
+	"Illinois"	"17"	2395	12801539	18.7087
+	"Indiana"	"18"	1473	6633053	22.2070
+	"Iowa"	"19"	315	3134693	10.0488
+	"Kansas"	"20"	320	2907289	11.0068
+	"Kentucky"	"21"	1392	4436974	31.3727
+	"Louisiana"	"22"	965	4681666	20.6123
+	"Maine"	"23"	359	1331479	26.9625
+	"Maryland"	"24"	685	6016447	11.3855
+	"Massachusetts"	"25"	2267	6811779	33.2806
+	"Michigan"	"26"	2162	9928300	21.7761
+	"Minnesota"	"27"	702	5519952	12.7175
+	"Mississippi"	"28"	346	2988726	11.5768
+	"Missouri"	"29"	1335	6093000	21.9104
+	"Montana"	"30"	107	1042520	10.2636
+	"Nebraska"	"31"	126	1907116	6.6068
+	"Nevada"	"32"	669	2940058	22.7547
+	"New Hampshire"	"33"	479	1334795	35.8857
+	"New Jersey"	"34"	2079	8944469	23.2434
+	"New Mexico"	"35"	548	2081015	26.3333
+	"New York"	"36"	3581	19745289	18.1360
+	"North Carolina"	"37"	1971	10146788	19.4249
+	"North Dakota"	"38"	80	757952	10.5548
+	"Ohio"	"39"	4311	11614373	37.1178
+	"Oklahoma"	"40"	816	3923561	20.7974
+	"Oregon"	"41"	515	4093465	12.5810
+	"Pennsylvania"	"42"	4554	12784227	35.6220
+	"Rhode Island"	"44"	348	1056426	32.9413
+	"South Carolina"	"45"	900	4961119	18.1411
+	"South Dakota"	"46"	77	865454	8.8971
+	"Tennessee"	"47"	1620	6651194	24.3565
+	"Texas"	"48"	2881	27862596	10.3400
+	"Utah"	"49"	574	3051217	18.8122
+	"Vermont"	"50"	115	624594	18.4120
+	"Virginia"	"51"	1422	8411808	16.9048
+	"Washington"	"53"	1129	7288000	15.4912
+	"West Virginia"	"54"	872	1831102	47.6216
+	"Wisconsin"	"55"	1078	5778708	18.6547
+	"Wyoming"	"56"	107	585501	18.2749
+"Total"			62276	323127513	19.2729
+"---"
+"Dataset: Compressed Mortality, 1999-2016"
+"Query Parameters:"
+"ICD-10 Codes: X40 (Accidental poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics); X41"
+"(Accidental poisoning by and exposure to antiepileptic, sedative-hypnotic, antiparkinsonism and psychotropic drugs, not"
+"elsewhere classified); X42 (Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not"
+"elsewhere classified); X43 (Accidental poisoning by and exposure to other drugs acting on the autonomic nervous system); X44"
+"(Accidental poisoning by and exposure to other and unspecified drugs, medicaments and biological substances); X45 (Accidental"
+"poisoning by and exposure to alcohol); X60 (Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and"
+"antirheumatics); X61 (Intentional self-poisoning by and exposure to antiepileptic, sedative-hypnotic, antiparkinsonism and"
+"psychotropic drugs, not elsewhere classified); X62 (Intentional self-poisoning by and exposure to narcotics and psychodysleptics"
+"[hallucinogens], not elsewhere classified); X63 (Intentional self-poisoning by and exposure to other drugs acting on the"
+"autonomic nervous system); X64 (Intentional self-poisoning by and exposure to other and unspecified drugs, medicaments and"
+"biological substances); X65 (Intentional self-poisoning by and exposure to alcohol)"
+"Year: 2016"
+"Group By: State"
+"Show Totals: True"
+"Show Zero Values: False"
+"Show Suppressed: False"
+"Calculate Rates Per: 100,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/cmf.html for more information."
+"---"
+"Query Date: Apr 23, 2019 8:56:30 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File"
+"1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No."
+"2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Apr 23, 2019 8:56:30 PM"
+"---"
+Caveats:
+"1. About sub-national population figures for regions, divisions, states and counties: population figures for 1999 are from the"
+"1990-1999 series of bridged-race intercensal estimates of the July 1 resident population; population figures for 2000 and 2010"
+"are bridged-race April 1 census counts; population figures for 2001-2009 are from the revised 2000-2009 series of bridged-race"
+"intercensal estimates of the July 1 resident population; and population figures for 2011-2015 are bridged-race postcensal"
+"estimates of the July 1 resident population, from the Vintage 2015 series released by NCHS on June 28, 2016."
+"2. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/cmf.html#Age Group."
+"3. Changes to cause of death classification affect reporting trends. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#ICD-10 Changes."
