@@ -9,6 +9,8 @@ output: html_document
 
 # libraries
 
+library(mdsr)
+
 # load data
 
 # define functions
