@@ -5,15 +5,26 @@ date: "04/30/2019"
 output: html_document
 ---
 
-```{r Front Matter}
-
+```{r Front Matter message = FALSE, include = FALSE}
 # libraries
+library(data.table)
 library(tidyverse)
 library(lubridate)
 library(sparklyr)
 
 # load data
-
+educ_raw <-
+  fread("Data/Education.csv")
+healthexp_raw <-
+  fread("Data/HealthExpend.csv")
+pop_raw <-
+  fread("Data/PopulationEstimates.csv")
+poverty_raw <-
+  fread("Data/PovertyEstimates.csv")
+unemp_raw <-
+  fread("Data/Unemployment.csv")
+drugmort_raw <-
+  fread("Data/Compressed Mortality, 1999-2016.txt")
 
 
 
@@ -24,9 +35,14 @@ library(sparklyr)
 
 
 
-```{r}
-
-
+```{r Data Wrangling}
+drugmort <-
+  drugmort_raw %>%
+  na.omit()
+educ <-
+  educ_raw %>%
+  distinct(State, .keep_all = TRUE) %>%
+  filter(`FIPS Code` != is.na(`FIPS Code`))
 
 
 ```
