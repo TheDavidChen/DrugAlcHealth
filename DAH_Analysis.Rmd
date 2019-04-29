@@ -192,6 +192,22 @@ HealthData_region <-
 
 ```
 
+```{r}
+
+Mortality_asc <-
+  HealthData_region %>%
+  arrange(desc(DrugMortalityRate))
+
+ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate), 
+                          y = DrugMortalityRate, fill = region)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(y = 'Drug Mortality Rate per 10000')
+
+
+
+```
+
 
 ## Regression Models/Supervised Learning
 
