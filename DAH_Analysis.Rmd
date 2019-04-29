@@ -165,9 +165,21 @@ Sourced from : https://www.businessinsider.com/united-states-regions-new-england
 
 ```{r}
 # Attaching region to dataset
-HealthData_region <-
+# Only concern is NA
+
+HealthData_region <- 
   HealthData %>%
-  mutate(region = sapply(HealthData$State, FUN = identify_region))
+  
+  # This line identifies the region and creates the variable
+  mutate(region = sapply(HealthData$State, FUN = identify_region)) %>%
+  
+  # Create a copy of region to unnest and spread
+  mutate(region_copy = region) %>%
+  
+  # The following code creates dummy variables for region
+  unnest(region_copy) %>% 
+  mutate(new = 1) %>% 
+  spread(region_copy, new, fill = 0) 
 
 ```
 
