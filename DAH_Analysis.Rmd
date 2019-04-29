@@ -106,6 +106,8 @@ HealthData <-
   left_join(educ, by = 'State') %>%
   left_join(poverty, by = 'State') %>%
   left_join(unemployment, by = 'State')
+
+
 ```
 
 
