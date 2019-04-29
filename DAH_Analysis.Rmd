@@ -76,9 +76,9 @@ identify_region <- function(state) {
 
 ```
 
+## Data Wrangling
 
-
-```{r Data Wrangling}
+```{r}
 # Drug Mortality Data
 ### Remove unnecessary columns and `Total` row
 drugmort <-
@@ -145,13 +145,16 @@ HealthData <-
   left_join(drugmort, healthexp, by = "State") %>%
   left_join(educ, by = 'State') %>%
   left_join(poverty, by = 'State') %>%
-  left_join(unemployment, by = 'State')
+  left_join(unemployment, by = 'State') %>%
+  filter(State != "District of Columbia")
+
+
 ```
 
 
 
 
-## Regions according to the US Census Bureau:  
+### Data Wrangling - Regions according to the US Census Bureau:  
 
 Sourced from : https://www.businessinsider.com/united-states-regions-new-england-midwest-south-2018-4    
 
@@ -183,8 +186,34 @@ HealthData_region <-
 
 ```
 
+```{r}
+
+Mortality_asc <-
+  HealthData_region %>%
+  arrange(desc(DrugMortalityRate))
+
+ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate), 
+                          y = DrugMortalityRate, fill = region)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(y = 'Drug Mortality Rate per 10000')
 
 
+
+```
+
+
+## Regression Models/Supervised Learning
+
+### Regression
+
+```{r}
+
+```
+
+## Unsupervised Learning
+
+## Big Data Tools
 
 
 
