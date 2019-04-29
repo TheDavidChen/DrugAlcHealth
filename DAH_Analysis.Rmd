@@ -13,6 +13,7 @@ rm(list = ls())
 library(data.table)
 library(tidyverse)
 library(lubridate)
+library(leaps)
 #library(sparklyr)
 
 # load data
@@ -87,6 +88,7 @@ drugmort <-
   select(-Notes, -`State Code`) %>%
   rename(DrugDeaths = Deaths,
          DrugMortalityRate = `Crude Rate`)
+
 # Education Level Data
 ### Clean headers, select for state data, select relevant columns
 educ <-
@@ -103,13 +105,15 @@ educ <-
          PercentAssoc = `Percent of adults completing some college or associate's degree, 2013-17`,
          PercentHS = `Percent of adults with a high school diploma only, 2013-17`,
          PercentLessHS = `Percent of adults with less than a high school diploma, 2013-17`)
+
 # Health Expenditure Data
 ### Remove non-state rows, extraneous column
 healthexp <-
   healthexp_raw[1:51] %>%
   rename(HealthExpenditure = `2016`, State = STATE) %>%
-  mutate(HealthExpenditure = substring(HealthExpenditure, 2)) %>%
+  mutate(HealthExpenditure = parse_number(HealthExpenditure)) %>%
   select(State, HealthExpenditure)
+
 # Poverty Data
 ### Clean headers, select for state data, select relevant columns
 poverty_raw$State[poverty_raw$State == "Wi"] <- "WI"
@@ -125,6 +129,7 @@ poverty <-
          PovertyPctAll0_17 = PCTPOV017_2017) %>%
   mutate(PovertyCountAll = parse_number(PovertyCountAll),
          PovertyCount0_17 = parse_number(PovertyCount0_17))
+
 # Unemployment Data
 ### Clean headers, select for state data, select relevant columns
 unemp_raw$State[unemp_raw$State == "Co"] <- "CO"
@@ -137,9 +142,10 @@ unemployment <-
   rename(State = Area_name,
          LaborForce = Civilian_labor_force_2016,
          Unemployed = Unemployed_2016,
-         UnmploymentRate = Unemployment_rate_2016) %>%
+         UnemploymentRate = Unemployment_rate_2016) %>%
   mutate(LaborForce = parse_number(LaborForce),
          Unemployed = parse_number(Unemployed))
+
 # Join data into one frame
 HealthData <-
   left_join(drugmort, healthexp, by = "State") %>%
@@ -192,7 +198,16 @@ HealthData_region <-
 ### Regression
 
 ```{r}
-
+fullhealth_lm <-
+  lm(DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate,
+     data = HealthData_region)
+summary(fullhealth_lm)
+# Fitted model is not good, none of the regressors are significant
+subsets <-
+  regsubsets(DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate,
+     data = HealthData_region, nbest = 5)
+# 
+plot(subsets)
 ```
 
 ## Unsupervised Learning

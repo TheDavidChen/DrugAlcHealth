@@ -6,15 +6,14 @@ In this project, we use classical regression models and supervised learning meth
 
 Drug Related Mortality Rates (2016): https://wonder.cdc.gov/mortSql.html
 
-- Accidental: X40-X45
-- Intentional: X60-X65
+- Accidental: X40-X45 (Drug and Alcohol)
+- Intentional: X60-X65 (Drug and Alcohol)
+- Per 10000
 
 Health Expenditure Data (2016): https://slfdqs.taxpolicycenter.org/pages.cfm
 
 - Use E055 Health-Direct Expend 
-
-Alcohol-impaired driving deaths: http://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/health-behaviors/alcohol-drug-use/alcohol-impaired-driving-deaths
-
+- Per Capita Data
 
 Poverty rate, Population, Education, Median Household Income (2016): https://www.ers.usda.gov/data-products/county-level-data-sets/
 
