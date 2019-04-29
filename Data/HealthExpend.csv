@@ -1,7 +1,57 @@
-Level:,State and Local
-Unit:,Per Capita (dollars), Nominal
-STATE,SERIES,2016
-Alabama,(E055) Health-Direct Expend,"            $169"Alaska,(E055) Health-Direct Expend,"            $389"Arizona,(E055) Health-Direct Expend,"            $413"Arkansas,(E055) Health-Direct Expend,"            $120"California,(E055) Health-Direct Expend,"            $514"Colorado,(E055) Health-Direct Expend,"            $155"Connecticut,(E055) Health-Direct Expend,"            $270"DC,(E055) Health-Direct Expend,"            $666"Delaware,(E055) Health-Direct Expend,"            $502"Florida,(E055) Health-Direct Expend,"            $239"Georgia,(E055) Health-Direct Expend,"            $218"Hawaii,(E055) Health-Direct Expend,"            $381"Idaho,(E055) Health-Direct Expend,"            $152"Illinois,(E055) Health-Direct Expend,"            $197"Indiana,(E055) Health-Direct Expend,"            $118"Iowa,(E055) Health-Direct Expend,"            $141"Kansas,(E055) Health-Direct Expend,"            $141"Kentucky,(E055) Health-Direct Expend,"            $189"Louisiana,(E055) Health-Direct Expend,"            $155"Maine,(E055) Health-Direct Expend,"            $193"Maryland,(E055) Health-Direct Expend,"            $309"Massachusetts,(E055) Health-Direct Expend,"            $292"Michigan,(E055) Health-Direct Expend,"            $440"Minnesota,(E055) Health-Direct Expend,"            $212"Mississippi,(E055) Health-Direct Expend,"            $137"Missouri,(E055) Health-Direct Expend,"            $358"Montana,(E055) Health-Direct Expend,"            $344"Nebraska,(E055) Health-Direct Expend,"            $299"Nevada,(E055) Health-Direct Expend,"            $128"New Hampshire,(E055) Health-Direct Expend,"            $130"New Jersey,(E055) Health-Direct Expend,"            $189"New Mexico,(E055) Health-Direct Expend,"            $258"New York,(E055) Health-Direct Expend,"            $340"North Carolina,(E055) Health-Direct Expend,"            $462"North Dakota,(E055) Health-Direct Expend,"            $407"Ohio,(E055) Health-Direct Expend,"            $377"Oklahoma,(E055) Health-Direct Expend,"            $278"Oregon,(E055) Health-Direct Expend,"            $352"Pennsylvania,(E055) Health-Direct Expend,"            $412"Rhode Island,(E055) Health-Direct Expend,"            $192"South Carolina,(E055) Health-Direct Expend,"            $266"South Dakota,(E055) Health-Direct Expend,"            $253"Tennessee,(E055) Health-Direct Expend,"            $146"Texas,(E055) Health-Direct Expend,"            $189"Utah,(E055) Health-Direct Expend,"            $193"Vermont,(E055) Health-Direct Expend,"            $638"Virginia,(E055) Health-Direct Expend,"            $272"Washington,(E055) Health-Direct Expend,"            $333"West Virginia,(E055) Health-Direct Expend,"            $158"Wisconsin,(E055) Health-Direct Expend,"            $258"Wyoming,(E055) Health-Direct Expend,"            $527"
-"Observations with N/A, missing years or zero values should be checked to see if data are available for a given year or level of government. See help page on data availability for more information."
-"You may also download an Excel spreadsheet containing the CPI, Population and Personal Income numbers used in these calculations."
-"Suggested Citation: State & Local Government Finance Data Query System. http://www.taxpolicycenter.org/slf-dqs/pages.cfm. The Urban Institute-Brookings Institution Tax Policy Center. Data from U.S. Census Bureau, Annual Survey of State and Local Government Finances, Government Finances, Volume 4, and Census of Governments (Years). Date of Access: ("23-Apr-19 08:52 PM)
+STATE,SERIES,2016
+Alabama,(E055) Health-Direct Expend,$169 
+Alaska,(E055) Health-Direct Expend,$389 
+Arizona,(E055) Health-Direct Expend,$413 
+Arkansas,(E055) Health-Direct Expend,$120 
+California,(E055) Health-Direct Expend,$514 
+Colorado,(E055) Health-Direct Expend,$155 
+Connecticut,(E055) Health-Direct Expend,$270 
+DC,(E055) Health-Direct Expend,$666 
+Delaware,(E055) Health-Direct Expend,$502 
+Florida,(E055) Health-Direct Expend,$239 
+Georgia,(E055) Health-Direct Expend,$218 
+Hawaii,(E055) Health-Direct Expend,$381 
+Idaho,(E055) Health-Direct Expend,$152 
+Illinois,(E055) Health-Direct Expend,$197 
+Indiana,(E055) Health-Direct Expend,$118 
+Iowa,(E055) Health-Direct Expend,$141 
+Kansas,(E055) Health-Direct Expend,$141 
+Kentucky,(E055) Health-Direct Expend,$189 
+Louisiana,(E055) Health-Direct Expend,$155 
+Maine,(E055) Health-Direct Expend,$193 
+Maryland,(E055) Health-Direct Expend,$309 
+Massachusetts,(E055) Health-Direct Expend,$292 
+Michigan,(E055) Health-Direct Expend,$440 
+Minnesota,(E055) Health-Direct Expend,$212 
+Mississippi,(E055) Health-Direct Expend,$137 
+Missouri,(E055) Health-Direct Expend,$358 
+Montana,(E055) Health-Direct Expend,$344 
+Nebraska,(E055) Health-Direct Expend,$299 
+Nevada,(E055) Health-Direct Expend,$128 
+New Hampshire,(E055) Health-Direct Expend,$130 
+New Jersey,(E055) Health-Direct Expend,$189 
+New Mexico,(E055) Health-Direct Expend,$258 
+New York,(E055) Health-Direct Expend,$340 
+North Carolina,(E055) Health-Direct Expend,$462 
+North Dakota,(E055) Health-Direct Expend,$407 
+Ohio,(E055) Health-Direct Expend,$377 
+Oklahoma,(E055) Health-Direct Expend,$278 
+Oregon,(E055) Health-Direct Expend,$352 
+Pennsylvania,(E055) Health-Direct Expend,$412 
+Rhode Island,(E055) Health-Direct Expend,$192 
+South Carolina,(E055) Health-Direct Expend,$266 
+South Dakota,(E055) Health-Direct Expend,$253 
+Tennessee,(E055) Health-Direct Expend,$146 
+Texas,(E055) Health-Direct Expend,$189 
+Utah,(E055) Health-Direct Expend,$193 
+Vermont,(E055) Health-Direct Expend,$638 
+Virginia,(E055) Health-Direct Expend,$272 
+Washington,(E055) Health-Direct Expend,$333 
+West Virginia,(E055) Health-Direct Expend,$158 
+Wisconsin,(E055) Health-Direct Expend,$258 
+Wyoming,(E055) Health-Direct Expend,$527 
+,,
+"Observations with N/A, missing years or zero values should be checked to see if data are available for a given year or level of government. See help page on data availability for more information.",,
+"You may also download an Excel spreadsheet containing the CPI, Population and Personal Income numbers used in these calculations.",,
+,,
+"Suggested Citation: State & Local Government Finance Data Query System. http://www.taxpolicycenter.org/slf-dqs/pages.cfm. The Urban Institute-Brookings Institution Tax Policy Center. Data from U.S. Census Bureau, Annual Survey of State and Local Government Finances, Government Finances, Volume 4, and Census of Governments (Years). Date of Access: (23-Apr-19 08:52 PM)",,

@@ -6,6 +6,9 @@ output: html_document
 ---
 
 ```{r Front Matter message = FALSE, include = FALSE}
+# Clean up R environment
+rm(list = ls())
+
 # libraries
 library(data.table)
 library(tidyverse)
@@ -16,9 +19,10 @@ library(sparklyr)
 educ_raw <-
   fread("Data/Education.csv")
 healthexp_raw <-
-  fread("Data/HealthExpend.csv")
-pop_raw <-
-  fread("Data/PopulationEstimates.csv")
+  fread("Data/HealthExpend.csv", header = TRUE)
+# pop_raw <-
+#   fread("Data/PopulationEstimates.csv")
+### population counts included in drug mortality data
 poverty_raw <-
   fread("Data/PovertyEstimates.csv")
 unemp_raw <-
@@ -36,13 +40,87 @@ drugmort_raw <-
 
 
 ```{r Data Wrangling}
+# Drug Mortality Data
+### Remove unnecessary columns and `Total` row
 drugmort <-
   drugmort_raw %>%
-  na.omit()
+  na.omit() %>%
+  select(-Notes, -`State Code`) %>%
+  rename(DrugDeaths = Deaths,
+         DrugMortalityRate = `Crude Rate`)
+# Education Level Data
+### Clean headers, select for state data, select relevant columns
 educ <-
   educ_raw %>%
   distinct(State, .keep_all = TRUE) %>%
-  filter(`FIPS Code` != is.na(`FIPS Code`))
-
-
+  filter(`FIPS Code` != is.na(`FIPS Code`),
+         State != "PR") %>%
+  select(`Area name`, `Percent of adults with a bachelor's degree or higher, 2013-17`,
+         `Percent of adults completing some college or associate's degree, 2013-17`,
+         `Percent of adults with a high school diploma only, 2013-17`,
+         `Percent of adults with less than a high school diploma, 2013-17`) %>%
+  rename(State = `Area name`,
+         PercentBachelor = `Percent of adults with a bachelor's degree or higher, 2013-17`,
+         PercentAssoc = `Percent of adults completing some college or associate's degree, 2013-17`,
+         PercentHS = `Percent of adults with a high school diploma only, 2013-17`,
+         PercentLessHS = `Percent of adults with less than a high school diploma, 2013-17`)
+# Health Expenditure Data
+### Remove non-state rows, extraneous column
+healthexp <-
+  healthexp_raw[1:51] %>%
+  rename(HealthExpenditure = `2016`, State = STATE) %>%
+  mutate(HealthExpenditure = substring(HealthExpenditure, 2)) %>%
+  select(State, HealthExpenditure)
+# Poverty Data
+### Clean headers, select for state data, select relevant columns
+poverty_raw$State[poverty_raw$State == "Wi"] <- "WI"
+poverty <-
+  poverty_raw %>%
+  distinct(State, .keep_all = TRUE) %>%
+  filter(FIPStxt != is.na(FIPStxt)) %>%
+  select(Area_Name, POVALL_2017, PCTPOVALL_2017, POV017_2017, PCTPOV017_2017) %>%
+  rename(State = Area_Name,
+         PovertyCountAll = POVALL_2017,
+         PovertyPctAll = PCTPOVALL_2017,
+         PovertyCount0_17 = POV017_2017,
+         PovertyPctAll0_17 = PCTPOV017_2017) %>%
+  mutate(PovertyCountAll = parse_number(PovertyCountAll),
+         PovertyCount0_17 = parse_number(PovertyCount0_17))
+# Unemployment Data
+### Clean headers, select for state data, select relevant columns
+unemp_raw$State[unemp_raw$State == "Co"] <- "CO"
+unemployment <-
+  unemp_raw %>%
+  distinct(State, .keep_all = TRUE) %>%
+  filter(FIPStxt != is.na(FIPStxt),
+         State != "PR") %>%
+  select(Area_name, Civilian_labor_force_2016, Unemployed_2016, Unemployment_rate_2016) %>%
+  rename(State = Area_name,
+         LaborForce = Civilian_labor_force_2016,
+         Unemployed = Unemployed_2016,
+         UnmploymentRate = Unemployment_rate_2016) %>%
+  mutate(LaborForce = parse_number(LaborForce),
+         Unemployed = parse_number(Unemployed))
+# Join data into one frame
+HealthData <-
+  left_join(drugmort, healthexp, by = "State") %>%
+  left_join(educ, by = 'State') %>%
+  left_join(poverty, by = 'State') %>%
+  left_join(unemployment, by = 'State')
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
