@@ -37,7 +37,7 @@ drugmort_raw <-
 ```
 
 ```{r}
-#spark_install()
+# spark_install()
 sc <- spark_connect(master = 'local')
 
 ```
