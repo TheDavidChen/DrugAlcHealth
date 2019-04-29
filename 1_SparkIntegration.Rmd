@@ -1,0 +1,69 @@
+---
+title: "1_SparkIntegration"
+author: "David Chen"
+date: "April 26, 2019"
+output: html_document
+---
+
+
+```{r Front Matter message = FALSE, include = FALSE}
+
+rm(list = ls())
+
+# libraries
+library(data.table)
+library(tidyverse)
+library(lubridate)
+library(sparklyr)
+
+# load data
+educ_raw <-
+  fread("Data/Education.csv")
+healthexp_raw <-
+  fread("Data/HealthExpend.csv")
+pop_raw <-
+  fread("Data/PopulationEstimates.csv")
+poverty_raw <-
+  fread("Data/PovertyEstimates.csv")
+unemp_raw <-
+  fread("Data/Unemployment.csv")
+drugmort_raw <-
+  fread("Data/Compressed Mortality, 1999-2016.txt")
+
+
+
+# define functions
+
+```
+
+```{r}
+#spark_install()
+sc <- spark_connect(master = 'local')
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
