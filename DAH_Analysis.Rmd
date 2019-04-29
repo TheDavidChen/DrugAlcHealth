@@ -5,7 +5,7 @@ date: "04/30/2019"
 output: html_document
 ---
 
-```{r Front Matter message = FALSE, include = FALSE}
+```{r message = FALSE, include = FALSE}
 # Clean up R environment
 rm(list = ls())
 
@@ -13,7 +13,7 @@ rm(list = ls())
 library(data.table)
 library(tidyverse)
 library(lubridate)
-library(sparklyr)
+#library(sparklyr)
 
 # load data
 educ_raw <-
@@ -110,6 +110,32 @@ HealthData <-
 ```
 
 
+
+
+## Regions according to the US Census Bureau:  
+
+Sourced from : https://www.businessinsider.com/united-states-regions-new-england-midwest-south-2018-4    
+
+1. "The Northeast includes Maine, New Hampshire, Vermont, Massachusetts, Rhode Island, Connecticut, New York, New Jersey, and Pennsylvania."  
+
+2. "[The Midwest] consists of Ohio, Michigan, Indiana, Wisconsin, Illinois, Minnesota, Iowa, Missouri, North Dakota, South Dakota, Nebraska, and Kansas."  
+
+3. "...the South consists of Delaware, Maryland, Virginia, West Virginia, Kentucky, North Carolina, South Carolina, Tennessee, Georgia, Florida, Alabama, Mississippi, Arkansas, Louisiana, Texas, and Oklahoma."   
+
+4. "The West consists of Montana, Idaho, Wyoming, Colorado, New Mexico, Arizona, Utah, Nevada, California, Oregon, Washington, Alaska, and Hawaii."  
+```{r}
+# Attaching region to Complete dataset
+# 4 regions according to the US Census Bureau
+
+
+Northeast <- c('Maine', 'New Hampshire', 'Vermont', 'Massachusetts', 
+               'Rhode Island', 'Connecticut', 'New York', 'New Jersey',
+               'Pennsylvania')
+
+
+
+
+```
 
 
 
