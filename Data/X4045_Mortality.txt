@@ -1,0 +1,87 @@
+"Notes"	"State"	"State Code"	Deaths	Population	Crude Rate
+	"Alabama"	"01"	706	4863300	14.51689
+	"Alaska"	"02"	126	741894	16.98356
+	"Arizona"	"04"	1278	6931071	18.43871
+	"Arkansas"	"05"	325	2988248	10.87594
+	"California"	"06"	4251	39250017	10.83057
+	"Colorado"	"08"	828	5540545	14.94438
+	"Connecticut"	"09"	924	3576452	25.83566
+	"Delaware"	"10"	268	952065	28.14934
+	"District of Columbia"	"11"	253	681170	37.14198
+	"Florida"	"12"	4346	20612439	21.08436
+	"Georgia"	"13"	1299	10310371	12.59896
+	"Hawaii"	"15"	174	1428557	12.18012
+	"Idaho"	"16"	187	1683140	11.11019
+	"Illinois"	"17"	2227	12801539	17.39635
+	"Indiana"	"18"	1381	6633053	20.81998
+	"Iowa"	"19"	268	3134693	8.54948
+	"Kansas"	"20"	256	2907289	8.80545
+	"Kentucky"	"21"	1334	4436974	30.06554
+	"Louisiana"	"22"	919	4681666	19.62976
+	"Maine"	"23"	320	1331479	24.03342
+	"Maryland"	"24"	608	6016447	10.10563
+	"Massachusetts"	"25"	2169	6811779	31.84190
+	"Michigan"	"26"	1995	9928300	20.09407
+	"Minnesota"	"27"	621	5519952	11.25010
+	"Mississippi"	"28"	323	2988726	10.80728
+	"Missouri"	"29"	1208	6093000	19.82603
+	"Montana"	"30"	90	1042520	8.63293
+	"Nebraska"	"31"	106	1907116	5.55813
+	"Nevada"	"32"	555	2940058	18.87718
+	"New Hampshire"	"33"	444	1334795	33.26353
+	"New Jersey"	"34"	1995	8944469	22.30429
+	"New Mexico"	"35"	481	2081015	23.11372
+	"New York"	"36"	3361	19745289	17.02178
+	"North Carolina"	"37"	1779	10146788	17.53264
+	"North Dakota"	"38"	69	757952	9.10348
+	"Ohio"	"39"	4115	11614373	35.43024
+	"Oklahoma"	"40"	761	3923561	19.39565
+	"Oregon"	"41"	435	4093465	10.62669
+	"Pennsylvania"	"42"	4289	12784227	33.54915
+	"Rhode Island"	"44"	332	1056426	31.42672
+	"South Carolina"	"45"	824	4961119	16.60916
+	"South Dakota"	"46"	65	865454	7.51051
+	"Tennessee"	"47"	1496	6651194	22.49220
+	"Texas"	"48"	2575	27862596	9.24178
+	"Utah"	"49"	486	3051217	15.92807
+	"Vermont"	"50"	100	624594	16.01040
+	"Virginia"	"51"	1308	8411808	15.54957
+	"Washington"	"53"	970	7288000	13.30955
+	"West Virginia"	"54"	836	1831102	45.65557
+	"Wisconsin"	"55"	985	5778708	17.04533
+	"Wyoming"	"56"	93	585501	15.88383
+"---"
+"Dataset: Compressed Mortality, 1999-2016"
+"Query Parameters:"
+"ICD-10 Codes: X40 (Accidental poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics); X41"
+"(Accidental poisoning by and exposure to antiepileptic, sedative-hypnotic, antiparkinsonism and psychotropic drugs, not"
+"elsewhere classified); X42 (Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not"
+"elsewhere classified); X43 (Accidental poisoning by and exposure to other drugs acting on the autonomic nervous system); X44"
+"(Accidental poisoning by and exposure to other and unspecified drugs, medicaments and biological substances); X45 (Accidental"
+"poisoning by and exposure to alcohol)"
+"Year: 2016"
+"Group By: State"
+"Show Totals: False"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Calculate Rates Per: 100,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/cmf.html for more information."
+"---"
+"Query Date: Apr 29, 2019 8:46:17 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File"
+"1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No."
+"2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Apr 29, 2019 8:46:17 PM"
+"---"
+Caveats:
+"1. About sub-national population figures for regions, divisions, states and counties: population figures for 1999 are from the"
+"1990-1999 series of bridged-race intercensal estimates of the July 1 resident population; population figures for 2000 and 2010"
+"are bridged-race April 1 census counts; population figures for 2001-2009 are from the revised 2000-2009 series of bridged-race"
+"intercensal estimates of the July 1 resident population; and population figures for 2011-2015 are bridged-race postcensal"
+"estimates of the July 1 resident population, from the Vintage 2015 series released by NCHS on June 28, 2016."
+"2. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/cmf.html#Age Group."
+"3. Changes to cause of death classification affect reporting trends. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#ICD-10 Changes."
