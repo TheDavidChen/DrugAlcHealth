@@ -292,7 +292,7 @@ The regression tree shows that the education level (the percent of people who ha
 ```{r}
 # define training control
 train_control <- 
-  trainControl(method = "cv", number = 2)
+  trainControl(method = "cv", number = 10)
 # train the model
 treecv <- 
   form %>%
