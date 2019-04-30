@@ -441,7 +441,7 @@ HealthData_pca$x %>%
   rownames_to_column() %>%
   ggplot(aes(x = PC1, y = PC2)) + 
   geom_text(aes(label = names$State), size = 3) + 
-  xlab("Best Vector from PCA (approx. Intentional Self-Poisoning Rate") + 
+  xlab("Best Vector from PCA (approx. Intentional Drug Self-Poisoning Rate") + 
   ylab("2nd Best Vector from PCA (approx. Education)") + 
   ggtitle("Two-dimensional representation of Drug Mortality by State")
 
@@ -449,7 +449,7 @@ HealthData_pca$x %>%
   as.data.frame() %>%  
   ggplot(aes(x = PC1, y = PC2)) + 
   geom_point(aes(color = Region), size = 3) + 
-  xlab("Best Vector from PCA (approx. Intentional Self-Poisoning Rate") + 
+  xlab("Best Vector from PCA (approx. Intentional Drug Self-Poisoning Rate") + 
   ylab("2nd Best Vector from PCA (approx. Education)") + 
   ggtitle("Two-dimensional representation of Drug Mortality by Region")
 ```
@@ -545,6 +545,10 @@ HD_dendo %>%
 Looking at the dendogram by region we can immediately start to see some differntiation, although there certainly are mixes in regions. The left-most cluster is almost entirely Northeast and Southern regions while the cluster farthest to the right is predominately West. In between we can see it almost entirely composed of Midwestern and Southern states, with only a few exceptions in the most rightward cluster. Overall we can see that the different regions do seem to share similarities between themselves, although not extremely distinctly.  
 
 ### Unsupervised Learning Summary
+
+Entering the unsupervised learning section we wanted to examine if there are any distinct clusters within the data, especially if it matches with the US Census Bureau regions or not. From our Dendogram and K-means analysis we found that the created clusters do seem to isolate one or two regions, indicating that there likely is some difference between regions, albeit slight at times. From our PCA analysis we found that two principal components accounted for a majority of the variance, approximately represented by intentional drug self-poisoning rates and education levels. Moving forward we can dive deeper into the relationship regions have with state drug mortality rates as well their differing qualities.  
+
+
 
 ## Conclusions
 
