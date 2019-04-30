@@ -1,0 +1,96 @@
+"Notes"	"State"	"State Code"	Deaths	Population	Crude Rate
+	"Alabama"	"01"	48	4863300	0.98698
+	"Alaska"	"02"	16	741894	2.15664 (Unreliable)
+	"Arizona"	"04"	140	6931071	2.01989
+	"Arkansas"	"05"	57	2988248	1.90747
+	"California"	"06"	555	39250017	1.41401
+	"Colorado"	"08"	137	5540545	2.47268
+	"Connecticut"	"09"	78	3576452	2.18093
+	"Delaware"	"10"	11	952065	1.15538 (Unreliable)
+	"District of Columbia"	"11"	Suppressed	681170	Suppressed
+	"Florida"	"12"	422	20612439	2.04731
+	"Georgia"	"13"	112	10310371	1.08628
+	"Hawaii"	"15"	15	1428557	1.05001 (Unreliable)
+	"Idaho"	"16"	37	1683140	2.19827
+	"Illinois"	"17"	168	12801539	1.31234
+	"Indiana"	"18"	92	6633053	1.38699
+	"Iowa"	"19"	47	3134693	1.49935
+	"Kansas"	"20"	64	2907289	2.20136
+	"Kentucky"	"21"	58	4436974	1.30720
+	"Louisiana"	"22"	46	4681666	0.98256
+	"Maine"	"23"	39	1331479	2.92907
+	"Maryland"	"24"	77	6016447	1.27983
+	"Massachusetts"	"25"	98	6811779	1.43868
+	"Michigan"	"26"	167	9928300	1.68206
+	"Minnesota"	"27"	81	5519952	1.46740
+	"Mississippi"	"28"	23	2988726	0.76956
+	"Missouri"	"29"	127	6093000	2.08436
+	"Montana"	"30"	17	1042520	1.63066 (Unreliable)
+	"Nebraska"	"31"	20	1907116	1.04870
+	"Nevada"	"32"	114	2940058	3.87747
+	"New Hampshire"	"33"	35	1334795	2.62213
+	"New Jersey"	"34"	84	8944469	0.93913
+	"New Mexico"	"35"	67	2081015	3.21958
+	"New York"	"36"	220	19745289	1.11419
+	"North Carolina"	"37"	192	10146788	1.89222
+	"North Dakota"	"38"	11	757952	1.45128 (Unreliable)
+	"Ohio"	"39"	196	11614373	1.68756
+	"Oklahoma"	"40"	55	3923561	1.40179
+	"Oregon"	"41"	80	4093465	1.95433
+	"Pennsylvania"	"42"	265	12784227	2.07287
+	"Rhode Island"	"44"	16	1056426	1.51454 (Unreliable)
+	"South Carolina"	"45"	76	4961119	1.53191
+	"South Dakota"	"46"	12	865454	1.38656 (Unreliable)
+	"Tennessee"	"47"	124	6651194	1.86433
+	"Texas"	"48"	306	27862596	1.09825
+	"Utah"	"49"	88	3051217	2.88410
+	"Vermont"	"50"	15	624594	2.40156 (Unreliable)
+	"Virginia"	"51"	114	8411808	1.35524
+	"Washington"	"53"	159	7288000	2.18167
+	"West Virginia"	"54"	36	1831102	1.96603
+	"Wisconsin"	"55"	93	5778708	1.60936
+	"Wyoming"	"56"	14	585501	2.39111 (Unreliable)
+"---"
+"Dataset: Compressed Mortality, 1999-2016"
+"Query Parameters:"
+"ICD-10 Codes: X60 (Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics); X61"
+"(Intentional self-poisoning by and exposure to antiepileptic, sedative-hypnotic, antiparkinsonism and psychotropic drugs, not"
+"elsewhere classified); X62 (Intentional self-poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not"
+"elsewhere classified); X63 (Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system);"
+"X64 (Intentional self-poisoning by and exposure to other and unspecified drugs, medicaments and biological substances); X65"
+"(Intentional self-poisoning by and exposure to alcohol)"
+"Year: 2016"
+"Group By: State"
+"Show Totals: Disabled"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Calculate Rates Per: 100,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/cmf.html for more information."
+"---"
+"Query Date: Apr 29, 2019 8:48:22 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File"
+"1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No."
+"2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Apr 29, 2019 8:48:22 PM"
+"---"
+Messages:
+"1. Totals are not available for these results due to suppression constraints. More Information:"
+"http://wonder.cdc.gov/wonder/help/faq.html#Privacy."
+"---"
+Caveats:
+"1. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than"
+"10. Figures representing infant deaths and births have additional constraints for national and local data. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#Assurance of Confidentiality."
+"2. Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#Unreliable."
+"3. About sub-national population figures for regions, divisions, states and counties: population figures for 1999 are from the"
+"1990-1999 series of bridged-race intercensal estimates of the July 1 resident population; population figures for 2000 and 2010"
+"are bridged-race April 1 census counts; population figures for 2001-2009 are from the revised 2000-2009 series of bridged-race"
+"intercensal estimates of the July 1 resident population; and population figures for 2011-2015 are bridged-race postcensal"
+"estimates of the July 1 resident population, from the Vintage 2015 series released by NCHS on June 28, 2016."
+"4. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/cmf.html#Age Group."
+"5. Changes to cause of death classification affect reporting trends. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#ICD-10 Changes."
