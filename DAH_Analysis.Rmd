@@ -5,6 +5,8 @@ date: "04/30/2019"
 output: html_document
 ---
 
+In this project, we use classical regression models and supervised learning methods to link health expenditure, among other variables, by state and state census data to drug and alcohol overdose deaths. In exploring this relationship, we seek to understand whether the amount of funds invested in the health of citizens plays a role in preventing deaths from drugs and make recommendations on whether states which see more drug deaths should consider increasing health expenditures. Data sources can be found in the README.md file.
+
 ```{r message = FALSE, include = FALSE}
 # Clean up R environment
 rm(list = ls())
@@ -407,7 +409,7 @@ importance(trainforest) %>%
 
 The Random Forest (with mtry = 2) gives an R-squared of 0.1924, worse than the regression tree but better than the other models. This model states that the percent of people with a Bachelors is the most important predictor of drug mortality rate, followed by unemployment rate, then percent of people in poverty, then health expenditure. This is consistent with what we have found in previous models, and is important to see as the biggest question in exploring this data was to see whether health expenditure affected drug mortality rates, and here we see it is not as important as other factors.
 
-### Summary
+### Supervised Learning Summary
 
 Generally, we learned that the unemployment rate and education level (the percent of people with a Bachelors) are the biggest predictors in drug mortality rate, consistent across several models. The percent of people in poverty and health expenditure are not as significant in predicting drug mortality rate.
 
@@ -541,5 +543,9 @@ HD_dendo %>%
 ```
 
 Looking at the dendogram by region we can immediately start to see some differntiation, although there certainly are mixes in regions. The left-most cluster is almost entirely Northeast and Southern regions while the cluster farthest to the right is predominately West. In between we can see it almost entirely composed of Midwestern and Southern states, with only a few exceptions in the most rightward cluster. Overall we can see that the different regions do seem to share similarities between themselves, although not extremely distinctly.  
+
+### Unsupervised Learning Summary
+
+## Conclusions
 
 

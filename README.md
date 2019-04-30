@@ -1,6 +1,6 @@
 # DrugAlcHealth
 
-In this project, we use classical regression models and supervised learning methods to link health expenditure by state and state census data to drug overdose deaths and/or alcohol-impaired driving deaths. In exploring this relationship, we seek to understand whether the amount of funds invested in the health of citizens plays a role in preventing deaths from drugs and make recommendations on whether states which see more drug deaths should consider increasing health expenditures. 
+In this project, we use classical regression models and supervised learning methods to link health expenditure, among other variables, by state and state census data to drug and alcohol overdose deaths. In exploring this relationship, we seek to understand whether the amount of funds invested in the health of citizens plays a role in preventing deaths from drugs and make recommendations on whether states which see more drug deaths should consider increasing health expenditures. 
 
 ### Data Sources:
 
