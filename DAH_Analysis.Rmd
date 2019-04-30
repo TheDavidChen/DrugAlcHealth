@@ -17,7 +17,11 @@ library(leaps)
 library(rpart)
 library(partykit)
 library(caret)
+<<<<<<< HEAD
 library(biglm)
+=======
+library(randomForest)
+>>>>>>> cdaf99e521dee87f7ecb6ee304491621ddcea3ef
 #library(sparklyr)
 
 # load data
@@ -172,8 +176,7 @@ unintdeath <-
   select(-Notes, -`State Code`, -`Population`) %>%
   mutate(Deaths = as.numeric(Deaths)) %>%
   rename(unint_DrugDeaths = Deaths,
-         unint_DrugMortalityRate = `Crude Rate`) %>%
-  mutate(unint_DrugMortalityRate = parse_number(unint_DrugMortalityRate))
+         unint_DrugMortalityRate = `Crude Rate`) 
 
 
 combined_deaths <- 
@@ -233,7 +236,15 @@ HealthData_region <-
 ```
 
 ```{r}
+<<<<<<< HEAD
 ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate), 
+=======
+Mortality_asc <-
+  HealthData_region %>%
+  arrange(desc(DrugMortalityRate))
+
+ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate), 
+>>>>>>> cdaf99e521dee87f7ecb6ee304491621ddcea3ef
                           y = DrugMortalityRate, fill = region)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
@@ -252,14 +263,6 @@ ggplot(HealthData_region, aes(x = reorder(State, -unint_DrugMortalityRate),
 ## Regression Models/Supervised Learning
 
 ```{r}
-# set RNG seed for reproducible results
-set.seed(538) 
-# partition the data into training & test data
-n <- nrow(HealthData_region)
-test_idx <- sample.int(n, size = round(0.2 * n)) # select row numbers for the test set
-train <- HealthData_region[-test_idx, ]  # exclude the test set cases
-test <- HealthData_region[test_idx, ]
-
 form <- 
   DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate
 ```
@@ -272,13 +275,14 @@ form <-
 
 ```{r}
 null_mod <-
-  lm(DrugMortalityRate ~ 1, data = train)
+  lm(DrugMortalityRate ~ 1, data = HealthData_region)
 summary(null_mod)
 nullrsq <-
-  1 - sum((null_mod$residuals)^2) / sum((train$DrugMortalityRate - mean(train$DrugMortalityRate))^2)
+  1 - sum((null_mod$residuals)^2) / sum((HealthData_region$DrugMortalityRate - mean(HealthData_region$DrugMortalityRate))^2)
 nullrsq
 ```
-The mean drug mortality rate for the training data is 20.124, with an R-squared of 0.
+
+The mean drug mortality rate for the training data is 20.124, with an R-squared of $1.11 * 10^{-16}$.
 
 ### Regression
 
@@ -287,15 +291,17 @@ fullhealth_lm <-
   lm(form, data = HealthData_region)
 summary(fullhealth_lm)
 plot(fullhealth_lm)
-# Fitted model is not good, none of the regressors are significant
 ```
+
+The fitted model is not good; none of the regressors are significant.
 
 ```{r}
 subsets <-
   regsubsets(form, data = HealthData_region, nbest = 5)
 plot(subsets)
-# Model with just `UnemploymentRate` regressor the best
 ```
+
+The model with just the `UnemploymentRate` regressor is the best.
 
 ```{r}
 HealthData_region %>%
@@ -306,14 +312,15 @@ HealthData_region %>%
   ylab("Drug Mortality Rate") +
   labs(title = "Drug Mortality Rate vs. Unemployment Rate")
 ```
+
 A visual of the fit of Drug Mortality Rate vs. Unemployment Rate.
 
 
 ```{r}
-final_lm <-
+red_lm <-
   lm(DrugMortalityRate ~ UnemploymentRate, data = HealthData_region)
-summary(final_lm)
-plot(final_lm)
+summary(red_lm)
+plot(red_lm)
 ```
 
 Our regression modeling shows us that only the Unemployment Rate has a significant effect on the Drug Mortality Rate. Checking diagnostics plots, we are fine to assume linearity, independence, normality, and equivariance.
@@ -322,25 +329,56 @@ Our regression modeling shows us that only the Unemployment Rate has a significa
 
 We want to explore other modeling methods which could help us predict Drug Mortality Rate, beyond classical regression models.
 
+*Regression Tree*
+
 ```{r}
 regtree <-
-  rpart(form, data = train)
+  rpart(form, data = HealthData_region)
 plot(as.party(regtree))
 ```
 
-The regression tree shows that the education level (the percent of people who have a Bachelor's degree) is also significant in predicting Drug Mortality Rate, in addition to Unemployment Rate. An unemployment rate greater than or equal to 4.9% shows higher drug mortality, then the next highest shows an unemployment rate of less than 4.9% and greater than or equal to 33.55% of people with a Bachelors, then finally an unemployment rate of less than 4.9% and less than 33.55% of people with a Bachelors.
+The regression tree shows that the education level (the percent of people who have a Bachelor's degree) is also significant in predicting Drug Mortality Rate, in addition to Unemployment Rate. An unemployment rate greater than or equal to 4.45% shows higher drug mortality, and within that group, states with less than 27.65% of people having a Bachelors shows higher drug mortality than states with more than 27.65% of people having a Bachelors. For states with an unemployment rate of less than 4.45%, states with more than 32.4% of people having a Bachelors has a higher drug mortality than states with less than 32.4% of people having a Bachelors. This generally shows that unemployment rate is more important than the education level in predicting drug mortality rate.
 
 ```{r}
 # define training control
 train_control <- 
-  trainControl(method = "cv", number = 2)
+  trainControl(method = "cv", number = 10)
 # train the model
-treecv <- 
+regtreecv <- 
   form %>%
-  train(data = train, trControl = train_control, method = "rpart")
+  train(data = na.omit(HealthData_region), trControl = train_control, method = "rpart")
 # summarize results
-treecv
+regtreecv
 ```
+
+The Regression Tree gives an R-squared of 0.3113, much better than the previous models.
+
+*Random Forest*
+
+```{r}
+# train the model
+forestcv <- 
+  form %>%
+  train(data = na.omit(HealthData_region), trControl = train_control, method = "rf")
+# summarize results
+forestcv
+```
+
+```{r}
+trainforest <-
+  randomForest(form, data = HealthData_region, ntree = 200, 
+               mtry = 2, na.action = na.omit)
+importance(trainforest) %>%
+  as.data.frame() %>%
+  rownames_to_column() %>%
+  arrange(desc(IncNodePurity))
+```
+
+The Random Forest (with mtry = 2) gives an R-squared of 0.1924, worse than the regression tree but better than the other models. This model states that the percent of people with a Bachelors is the most important predictor of drug mortality rate, followed by unemployment rate, then percent of people in poverty, then health expenditure. This is consistent with what we have found in previous models, and is important to see as the biggest question in exploring this data was to see whether health expenditure affected drug mortality rates, and here we see it is not as important as other factors.
+
+### Summary
+
+Generally, we learned that the unemployment rate and education level (the percent of people with a Bachelors) are the biggest predictors in drug mortality rate, consistent across several models. The percent of people in poverty and health expenditure are not as significant in predicting drug mortality rate.
 
 ## Unsupervised Learning
 
