@@ -263,15 +263,63 @@ fullhealth_lm <-
   lm(DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate,
      data = HealthData_region)
 summary(fullhealth_lm)
+plot(fullhealth_lm)
 # Fitted model is not good, none of the regressors are significant
+```
+
+```{r}
 subsets <-
   regsubsets(DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate,
      data = HealthData_region, nbest = 5)
-# 
 plot(subsets)
+# Model with just `UnemploymentRate` regressor the best
 ```
 
+```{r}
+HealthData_region %>%
+  ggplot(aes(x = UnemploymentRate, y = DrugMortalityRate)) +
+  geom_point(aes(color = region)) +
+  stat_smooth(color = "grey50", method = lm, se = 0) +
+  xlab("Unemployment Rate") +
+  ylab("Drug Mortality Rate") +
+  labs(title = "Drug Mortality Rate vs. Unemployment Rate")
+```
+A visual of the fit of Drug Mortality Rate vs. Unemployment Rate.
+
+
+```{r}
+final_lm <-
+  lm(DrugMortalityRate ~ UnemploymentRate, data = HealthData_region)
+summary(final_lm)
+plot(final_lm)
+```
+
+Our regression modeling shows us that only the Unemployment Rate has a significant effect on the Drug Mortality Rate. Checking diagnostics plots, we are fine to assume linearity, independence, normality, and equivariance.
+
+### Supervised Learning
+
+We want to explore other modeling methods which could help us predict Drug Mortality Rate, beyond classical regression models.
+
+```{r}
+# set RNG seed for reproducible results
+set.seed(538) 
+# partition the data into training & test data
+n <- nrow(HealthData_region)
+test_idx <- sample.int(n, size = round(0.2 * n)) # select row numbers for the test set
+train <- HealthData_region[-test_idx, ]  # exclude the test set cases
+test <- HealthData_region[test_idx, ]
+```
+
+```{r}
+
+```
+
+
+
+
 ## Unsupervised Learning
+
+
 
 ## Big Data Tools
 
