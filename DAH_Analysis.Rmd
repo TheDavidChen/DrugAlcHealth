@@ -31,11 +31,6 @@ unemp_raw <-
 drugmort_raw <-
   fread("Data/Compressed Mortality, 1999-2016.txt")
 
-unint_death <- 
-  fread('Data/X4045_Mortality.txt')
-int_death <-
-  fread('Data/X6065_Mortality.txt')
-
 
 
 # define functions
@@ -91,7 +86,6 @@ drugmort <-
   drugmort_raw %>%
   na.omit() %>%
   select(-Notes, -`State Code`) %>%
-  mutate(Deaths = as.numeric(Deaths)) %>%
   rename(DrugDeaths = Deaths,
          DrugMortalityRate = `Crude Rate`)
 
@@ -152,52 +146,18 @@ unemployment <-
   mutate(LaborForce = parse_number(LaborForce),
          Unemployed = parse_number(Unemployed))
 
-```
-
-```{r}
-
-intdeath <-
-  int_death %>%
-  filter(State != "District of Columbia") %>%
-  select(-Notes, -`State Code`) %>%
-  mutate(Deaths = as.numeric(Deaths)) %>%
-  rename(int_DrugDeaths = Deaths,
-         int_DrugMortalityRate = `Crude Rate`) %>%
-  mutate(int_DrugMortalityRate = parse_number(int_DrugMortalityRate))
-
-unintdeath <-
-  unint_death %>%
-  filter(State != "District of Columbia") %>%
-  select(-Notes, -`State Code`, -`Population`) %>%
-  mutate(Deaths = as.numeric(Deaths)) %>%
-  rename(unint_DrugDeaths = Deaths,
-         unint_DrugMortalityRate = `Crude Rate`) %>%
-  mutate(unint_DrugMortalityRate = parse_number(unint_DrugMortalityRate))
-
-
-combined_deaths <- 
-  left_join(intdeath, unintdeath, by = 'State')
-
-
+# Join data into one frame
 HealthData <-
-  left_join(combined_deaths, drugmort, by = c("State", 'Population')) %>%
-  left_join(healthexp, by = "State") %>%
+  left_join(drugmort, healthexp, by = "State") %>%
   left_join(educ, by = 'State') %>%
   left_join(poverty, by = 'State') %>%
   left_join(unemployment, by = 'State') %>%
   filter(State != "District of Columbia")
+
+
 ```
 
 
-
-```{r}
-#EDA 
-
-ggplot(combined_deaths, aes(x = unint_DrugDeaths, y = int_DrugDeaths)) +
-  geom_point()
-ggplot(combined_deaths, aes(x = unint_DrugMortalityRate, y = int_DrugMortalityRate)) +
-  geom_point()
-```
 
 
 ### Data Wrangling - Regions according to the US Census Bureau:  
@@ -233,27 +193,35 @@ HealthData_region <-
 ```
 
 ```{r}
-ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate), 
+
+Mortality_asc <-
+  HealthData_region %>%
+  arrange(desc(DrugMortalityRate))
+
+ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate), 
                           y = DrugMortalityRate, fill = region)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(y = 'Drug Mortality Rate per 10000')
 
-ggplot(HealthData_region, aes(x = DrugMortalityRate, y = HealthExpenditure)) +
-  geom_point()
 
-
-Interesting_variables <- 
-  HealthData_region %>%
-  select(DrugMortalityRate, HealthExpenditure, PercentHS, PovertyPctAll, 
-         UnemploymentRate)
-
-plot(Interesting_variables)
 
 ```
 
 
 ## Regression Models/Supervised Learning
+
+### Null Model
+
+```{r}
+null_mod <-
+  lm(DrugMortalityRate ~ 1, data = train)
+summary(null_mod)
+nullrsq <-
+  1 - sum((null_mod$residuals)^2) / sum((train$DrugMortalityRate - mean(train$DrugMortalityRate))^2)
+nullrsq
+```
+The mean drug mortality rate for the training data is 20.124, with an R-squared of 0.
 
 ### Regression
 
