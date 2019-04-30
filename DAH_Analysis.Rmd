@@ -243,18 +243,6 @@ ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate),
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(y = 'Drug Mortality Rate per 10000')
 
-
-<<<<<<< HEAD
-Interesting_variables <- 
-  HealthData_region %>%
-  select(DrugMortalityRate, HealthExpenditure, PercentHS, PovertyPctAll, 
-         UnemploymentRate)
-
-plot(Interesting_variables)
-# test
-=======
-
->>>>>>> 14a026d2e555227934eb412e05a1e13118a7b154
 ```
 
 
