@@ -369,7 +369,7 @@ Generally, we learned that the unemployment rate and education level (the percen
 
 ## Unsupervised Learning
 
-
+First we wanted to conduct a PCA to see how mcuh the dataset could be reduced. We first removed categorical variables and dummy variables (the region variables), as well as variables that could be calculated through the other variables (Most notably DrugDeaths and DrugMortalityRate). Then, as Population and crude rates are included, direct values such as number of Unemployed are removed. 
 ```{r}
 HealthData_pca <- 
   HealthData_region %>%
@@ -377,16 +377,16 @@ HealthData_pca <-
             'South', 'West', 'PercentAssoc', 'Unemployed', 'PovertyCountAll')) %>%
   na.omit() %>%
   prcomp(scale = TRUE)  
-
-str(HealthData_pca)
 ```
 
+We then examine the two top PCA to see how they are composed. 
 ```{r}
 (-1) * HealthData_pca$rotation[, 1:2] %>% round(2)
 ```
 
+Plotting the states and regions by the two top PCA components we can see that there appears to be a central cluster of most states before it forms "wings" on both ends. We can also immediately see that California and West Virginia seem to be two unique states that can be examined further. 
 ```{r}
-
+# Louisiana is missing values so they are omitted. 
 names <- na.omit(HealthData_region)
 Region <- names$region
 
@@ -408,6 +408,7 @@ HealthData_pca$x %>%
   ggtitle("Two-dimensional representation of Drug Mortality by Region")
 ```
 
+For the sake of understanding our PCA analysis further we create the scree plot and cumulative PVE plot. Here we can see that the first two PCA components immediately account for a majority of the variation in the data, making our previous analysis a fairly strong representation of the data. 
 ```{r}
 
 HealthData_pve <- 
@@ -437,33 +438,24 @@ HealthData_pve %>%
 
 ```
 
+Having conducted the PCA analysis, we now want to move on to examine the different clustering techniques and see if the Census Bureau's designation of regions is reflected in our data. If we recall from the previous data wrangling, the US Census Bureau classifies US states into four regions: South, Northeast, Midwest, and West. 
 ```{r}
-
 HD_std <- 
   HealthData_region %>%
   select(c(int_DrugMortalityRate, unint_DrugMortalityRate, HealthExpenditure)) %>%
   na.omit() %>%
   scale() %>%
   as.data.frame()
-
-colnames(HealthData_region)
-
 ```
 
+By creating a Dendogram we can see the varying amounts of differentiation each state has from the next. We can immediately see 2-3 distinct groups, eliciting us to investigate further into the attributes of each state. 
 ```{r}
 
 HD_dist <- dist(HD_std)
-# # plot dedrogram (average linkage)
-# NCI_dist %>%
-#   hclust(method = "average") %>%
-#   plot(cex = 0.9, labels = cancerLabels, main = "NCI60 Dendogram with Average Linkage")
-# construct dendogram (complete linkage)
+
 HD_dendo <-
   HD_dist %>%
   hclust(method = "complete")
-# print dendogram info (distance & method)
-print(HD_dendo)
-
 
 HD_dendo %>%
   plot(cex = 0.9, labels = HealthData_region$State, lwd = 2,
@@ -471,13 +463,39 @@ HD_dendo %>%
 
 ```
 
-## Big Data Tools
+We can also draw a line to mark the cutoff for the first 4 clusters, following our attempts to identify representation of the Census designated regions. 
+```{r}
+HD_dendo %>%
+  plot(labels = HealthData_region$State, lwd = 2,
+       main = "Health Data Dendogram with Complete Linkage (4 clusters)") %>%
+  abline(h = 4.5, col = "red", lwd = 3)
 
+HD_dendoClusters <- cutree(tree = HD_dendo, k = 4)
+```
 
+After creating the Dendogram, we also want to Performing a k-means Clustering with 4 clusters to see if we will see similar results. Assuming all goes according to intuition, these two methods should result in extremely similar clusters. 
+```{r}
+set.seed(14)
 
+HD_kmean <-
+  HD_std %>%
+  kmeans(centers = 4, nstart = 20)
 
+HD_kmeanClusters <- HD_kmean$cluster
+```
 
+Let's now compare and see if the two clustering methods matched:   
+```{r}
+mosaic::tally(HD_dendoClusters ~ HD_kmeanClusters)
+```
 
+We can see that both methods had fairly similar clustering. Thus, we go back and check the dendogram to see if the clustering shows any signs of the regions designated by the US Census Bureau. 
+```{r}
+HD_dendo %>%
+  plot(cex = 0.9, labels = HealthData_region$region, lwd = 2,
+       main = "Health Data Dendogram with Complete Linkage")
+```
 
+Looking at the edendogram by region we can immediately start to see some differntiation, although there certainly are mixes in regions. The left-most cluster is almost entirely Northeast and Southern regions while the cluster farthest to the right is predominately West. In between we can see it almost entirely composed of Midwestern and Southern states, with only a few exceptions in the most rightward cluster. Overall we can see that the different regions do seem to share similarities between themselves, although not extremely distinctly.  
 
 
