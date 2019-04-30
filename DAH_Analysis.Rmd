@@ -91,6 +91,7 @@ drugmort <-
   drugmort_raw %>%
   na.omit() %>%
   select(-Notes, -`State Code`) %>%
+  mutate(Deaths = as.numeric(Deaths)) %>%
   rename(DrugDeaths = Deaths,
          DrugMortalityRate = `Crude Rate`)
 
@@ -151,15 +152,6 @@ unemployment <-
   mutate(LaborForce = parse_number(LaborForce),
          Unemployed = parse_number(Unemployed))
 
-# Join data into one frame
-HealthData <-
-  left_join(drugmort, healthexp, by = "State") %>%
-  left_join(educ, by = 'State') %>%
-  left_join(poverty, by = 'State') %>%
-  left_join(unemployment, by = 'State') %>%
-  filter(State != "District of Columbia")
-
-
 ```
 
 ```{r}
@@ -187,12 +179,19 @@ combined_deaths <-
   left_join(intdeath, unintdeath, by = 'State')
 
 
-HealthData_split <-
-  left_join(combined_deaths, healthexp, by = "State") %>%
+HealthData <-
+  left_join(combined_deaths, drugmort, by = c("State", 'Population')) %>%
+  left_join(healthexp, by = "State") %>%
   left_join(educ, by = 'State') %>%
   left_join(poverty, by = 'State') %>%
   left_join(unemployment, by = 'State') %>%
   filter(State != "District of Columbia")
+```
+
+
+
+```{r}
+#EDA 
 
 ggplot(combined_deaths, aes(x = unint_DrugDeaths, y = int_DrugDeaths)) +
   geom_point()
