@@ -34,7 +34,10 @@ unemp_raw <-
 drugmort_raw <-
   fread("Data/Compressed Mortality, 1999-2016.txt")
 
-
+unint_death <- 
+  fread('Data/X4045_Mortality.txt')
+int_death <-
+  fread('Data/X6065_Mortality.txt')
 
 # define functions
 
@@ -81,7 +84,6 @@ identify_region <- function(state) {
 ```
 
 ## Data Wrangling
-
 ```{r}
 # Drug Mortality Data
 ### Remove unnecessary columns and `Total` row
@@ -89,6 +91,7 @@ drugmort <-
   drugmort_raw %>%
   na.omit() %>%
   select(-Notes, -`State Code`) %>%
+  mutate(Deaths = as.numeric(Deaths)) %>%
   rename(DrugDeaths = Deaths,
          DrugMortalityRate = `Crude Rate`)
 
@@ -149,19 +152,52 @@ unemployment <-
   mutate(LaborForce = parse_number(LaborForce),
          Unemployed = parse_number(Unemployed))
 
-# Join data into one frame
+```
+
+```{r}
+
+intdeath <-
+  int_death %>%
+  filter(State != "District of Columbia") %>%
+  select(-Notes, -`State Code`) %>%
+  mutate(Deaths = as.numeric(Deaths)) %>%
+  rename(int_DrugDeaths = Deaths,
+         int_DrugMortalityRate = `Crude Rate`) %>%
+  mutate(int_DrugMortalityRate = parse_number(int_DrugMortalityRate))
+
+unintdeath <-
+  unint_death %>%
+  filter(State != "District of Columbia") %>%
+  select(-Notes, -`State Code`, -`Population`) %>%
+  mutate(Deaths = as.numeric(Deaths)) %>%
+  rename(unint_DrugDeaths = Deaths,
+         unint_DrugMortalityRate = `Crude Rate`) %>%
+  mutate(unint_DrugMortalityRate = parse_number(unint_DrugMortalityRate))
+
+
+combined_deaths <- 
+  left_join(intdeath, unintdeath, by = 'State')
+
+
 HealthData <-
-  left_join(drugmort, healthexp, by = "State") %>%
+  left_join(combined_deaths, drugmort, by = c("State", 'Population')) %>%
+  left_join(healthexp, by = "State") %>%
   left_join(educ, by = 'State') %>%
   left_join(poverty, by = 'State') %>%
   left_join(unemployment, by = 'State') %>%
   filter(State != "District of Columbia")
-
-
 ```
 
 
 
+```{r}
+#EDA 
+
+ggplot(combined_deaths, aes(x = unint_DrugDeaths, y = int_DrugDeaths)) +
+  geom_point()
+ggplot(combined_deaths, aes(x = unint_DrugMortalityRate, y = int_DrugMortalityRate)) +
+  geom_point()
+```
 
 ### Data Wrangling - Regions according to the US Census Bureau:  
 
