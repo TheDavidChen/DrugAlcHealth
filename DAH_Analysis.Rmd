@@ -17,6 +17,7 @@ library(leaps)
 library(rpart)
 library(partykit)
 library(caret)
+library(biglm)
 #library(sparklyr)
 
 # load data
@@ -232,18 +233,20 @@ HealthData_region <-
 ```
 
 ```{r}
-
-Mortality_asc <-
-  HealthData_region %>%
-  arrange(desc(DrugMortalityRate))
-
-ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate), 
+ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate), 
                           y = DrugMortalityRate, fill = region)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(y = 'Drug Mortality Rate per 10000')
-
 ```
+```{r}
+ggplot(HealthData_region, aes(x = reorder(State, -unint_DrugMortalityRate), 
+                          y = unint_DrugMortalityRate, fill = region)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(y = 'Drug Mortality Rate per 10000')
+```
+
 
 
 ## Regression Models/Supervised Learning
@@ -260,6 +263,10 @@ test <- HealthData_region[test_idx, ]
 form <- 
   DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate
 ```
+
+
+
+
 
 ### Null Model
 
