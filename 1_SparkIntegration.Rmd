@@ -6,7 +6,7 @@ output: html_document
 ---
 
 
-```{r Front Matter message = FALSE, include = FALSE}
+```{r message = FALSE, include = FALSE}
 
 rm(list = ls())
 
@@ -14,7 +14,8 @@ rm(list = ls())
 library(data.table)
 library(tidyverse)
 library(lubridate)
-library(sparklyr)
+#library(sparklyr)
+library(parallel)
 
 # load data
 educ_raw <-
@@ -30,29 +31,43 @@ unemp_raw <-
 drugmort_raw <-
   fread("Data/Compressed Mortality, 1999-2016.txt")
 
-
-
 # define functions
 
 ```
 
 ```{r}
-<<<<<<< HEAD
-spark_install()
-=======
 # spark_install()
->>>>>>> f4179dde1a9a65665a59985d0857520f96c87d55
 sc <- spark_connect(master = 'local')
+```
+
+```{r}
+my_cores <- detectCores()
+my_cores
 
 ```
 
 ```{r}
 
+unlist(mclapply(HealthData$State, FUN = identify_region, mc.cores = 1))
 
-```
 
-```{r}
 
+HealthData_region <- 
+  HealthData %>%
+  
+  # This line identifies the region and creates the variable
+  # Non-elegant solution but shows use of mclappy
+  ### Note: Windows users are only able to apply one core so it is done here
+  mutate(region = unlist(mclapply(HealthData$State, 
+                                  FUN = identify_region, mc.cores = 1))) %>%
+  
+  # Create a copy of region to unnest and spread
+  mutate(region_copy = region) %>%
+  
+  # The following code creates dummy variables for region
+  unnest(region_copy) %>% 
+  mutate(new = 1) %>% 
+  spread(region_copy, new, fill = 0) 
 
 ```
 
