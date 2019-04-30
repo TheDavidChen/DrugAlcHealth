@@ -253,12 +253,16 @@ ggplot(HealthData_region, aes(x = reorder(State, -unint_DrugMortalityRate),
 
 ## Regression Models/Supervised Learning
 
+We define the formula that indicates the relationship we want to explore in this analysis. This indicates that we seek to explore how health expenditure, education level, poverty level, and unemployment rate affect drug mortality rate.
+
 ```{r}
 form <- 
   DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate
 ```
 
 ### Null Model
+
+The first task is to set up a null model, in order to have a baselline to compare the rest of our models to. We certainly do not want any of our models to perform worse than the null model.
 
 ```{r}
 null_mod <-
@@ -269,9 +273,11 @@ nullrsq <-
 nullrsq
 ```
 
-The mean drug mortality rate for the training data is 20.124, with an R-squared of $1.11 * 10^{-16}$.
+The mean drug mortality rate for the data is 20.124, with an R-squared of $1.11 * 10^{-16}$. This indicates that the drug mortality rate is non-constant across states, and there are likely other factors influencing it.
 
 ### Regression
+
+The common and most interpretable method used to explore relationships between variables is regression techniques, so we perform this before building other models. To begin, we fit the full linear regression model with all the regressors previously indicated.
 
 ```{r}
 fullhealth_lm <-
@@ -280,7 +286,7 @@ summary(fullhealth_lm)
 plot(fullhealth_lm)
 ```
 
-The fitted model is not good; none of the regressors are significant.
+This fitted model is not good; none of the regressors are significant. Therefore, we would like to create subsets to compare the BIC of different models that can be built with these regressors. The lowest BIC indicates the best fit.
 
 ```{r}
 subsets <-
@@ -288,7 +294,7 @@ subsets <-
 plot(subsets)
 ```
 
-The model with just the `UnemploymentRate` regressor is the best.
+The model with just the unemployment rate regressor is the best. Therefore, we want to fit a regression model with only that regressor. Since this is a simple linear regression problem, it is useful to first visualize the relationship between drug mortality rate and unemployment rate.
 
 ```{r}
 HealthData_region %>%
@@ -300,8 +306,7 @@ HealthData_region %>%
   labs(title = "Drug Mortality Rate vs. Unemployment Rate")
 ```
 
-A visual of the fit of Drug Mortality Rate vs. Unemployment Rate.
-
+Visually, the data seems to follow a fairly strong positive linear trend. We are now interested in seeing whether the relationship is statistically significant.
 
 ```{r}
 red_lm <-
@@ -310,13 +315,15 @@ summary(red_lm)
 plot(red_lm)
 ```
 
-Our regression modeling shows us that only the Unemployment Rate has a significant effect on the Drug Mortality Rate. Checking diagnostics plots, we are fine to assume linearity, independence, normality, and equivariance.
+Our regression modeling shows us that only the Unemployment Rate has a significant effect on the Drug Mortality Rate. Checking diagnostics plots, we are fine to assume linearity, independence, normality, and equivariance, such that the given regression coefficients and fit are not misleading.
 
 ### Supervised Learning
 
 We want to explore other modeling methods which could help us predict Drug Mortality Rate, beyond classical regression models.
 
 *Regression Tree*
+
+We first fit a regression tree, which will help us understand how the drug mortality rate will change based off of different grouped values of our predictors.
 
 ```{r}
 regtree <-
@@ -341,6 +348,8 @@ regtreecv
 The Regression Tree gives an R-squared of 0.3113, much better than the previous models.
 
 *Random Forest*
+
+Next, we would like to fit a random forest model. This will give us an idea of the most to least important predictors in predicting drug mortality rate.
 
 ```{r}
 # train the model
@@ -369,7 +378,7 @@ Generally, we learned that the unemployment rate and education level (the percen
 
 ## Unsupervised Learning
 
-First we wanted to conduct a PCA to see how mcuh the dataset could be reduced. We first removed categorical variables and dummy variables (the region variables), as well as variables that could be calculated through the other variables (Most notably DrugDeaths and DrugMortalityRate). Then, as Population and crude rates are included, direct values such as number of Unemployed are removed. 
+First we wanted to conduct a PCA to see how much the dataset could be reduced. We first removed categorical variables and dummy variables (the region variables), as well as variables that could be calculated through the other variables (Most notably DrugDeaths and DrugMortalityRate). Then, as Population and crude rates are included, direct values such as number of Unemployed are removed. 
 ```{r}
 HealthData_pca <- 
   HealthData_region %>%
@@ -496,6 +505,6 @@ HD_dendo %>%
        main = "Health Data Dendogram with Complete Linkage")
 ```
 
-Looking at the edendogram by region we can immediately start to see some differntiation, although there certainly are mixes in regions. The left-most cluster is almost entirely Northeast and Southern regions while the cluster farthest to the right is predominately West. In between we can see it almost entirely composed of Midwestern and Southern states, with only a few exceptions in the most rightward cluster. Overall we can see that the different regions do seem to share similarities between themselves, although not extremely distinctly.  
+Looking at the dendogram by region we can immediately start to see some differntiation, although there certainly are mixes in regions. The left-most cluster is almost entirely Northeast and Southern regions while the cluster farthest to the right is predominately West. In between we can see it almost entirely composed of Midwestern and Southern states, with only a few exceptions in the most rightward cluster. Overall we can see that the different regions do seem to share similarities between themselves, although not extremely distinctly.  
 
 
