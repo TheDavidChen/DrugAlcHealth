@@ -17,9 +17,7 @@ library(leaps)
 library(rpart)
 library(partykit)
 library(caret)
-library(biglm)
 library(randomForest)
-#library(sparklyr)
 
 # load data
 educ_raw <-
@@ -157,7 +155,7 @@ unemployment <-
 ```
 
 ```{r}
-
+# Adding in intentional and unintentional deaths as separate variables
 intdeath <-
   int_death %>%
   filter(State != "District of Columbia") %>%
@@ -165,6 +163,7 @@ intdeath <-
   mutate(Deaths = as.numeric(Deaths)) %>%
   rename(int_DrugDeaths = Deaths,
          int_DrugMortalityRate = `Crude Rate`) %>%
+  # Some values are considered unreliable but we will continue to use them for this analysis
   mutate(int_DrugMortalityRate = parse_number(int_DrugMortalityRate))
 
 unintdeath <-
@@ -187,17 +186,6 @@ HealthData <-
   left_join(poverty, by = 'State') %>%
   left_join(unemployment, by = 'State') %>%
   filter(State != "District of Columbia")
-```
-
-
-
-```{r}
-#EDA 
-
-ggplot(combined_deaths, aes(x = unint_DrugDeaths, y = int_DrugDeaths)) +
-  geom_point()
-ggplot(combined_deaths, aes(x = unint_DrugMortalityRate, y = int_DrugMortalityRate)) +
-  geom_point()
 ```
 
 ### Data Wrangling - Regions according to the US Census Bureau:  
@@ -231,25 +219,72 @@ HealthData_region <-
 
 ```
 
+
+Now that we've finally finished consolidating all the datasets -- it's time to start doing some basic EDA! First, we want to examine the relationship between intentional and unintentional drug mortality rates. As expected, for the raw counts there appears to be a fairly strong relationship, with unintentional deaths far higher than intentional. However, much to our surprise, there doesn't appear to be a strong relationship between the Crude rates (per 100,000). 
+```{r}
+#EDA 
+
+ggplot(HealthData_region, aes(x = unint_DrugDeaths, 
+                              y = int_DrugDeaths, color = region)) +
+  geom_point() +
+  labs(x = 'Unintentional Drug Self-Poisoning Deaths', 
+       y = 'Intentional Drug Self-Poisoning Deaths', 
+       title = 'Unintentional vs Intentional Drug Self-Poisoning Deaths (per 100,000)')
+
+ggplot(HealthData_region, aes(x = unint_DrugMortalityRate, 
+                              y = int_DrugMortalityRate, color = region)) +
+  geom_point() + 
+  labs(x = 'Unintentional Drug Mortality Rate', 
+       y = 'Intentional Drug Mortality Rate', 
+       title = 'Unintentional vs Intentional Drug Mortality Rates (per 100,000)') +
+  xlim(0, 50) + 
+  ylim(0, 4)
+```
+
+We want to look further to see if there is any similarities between the regions. By creating a faceted graph, we can directly compare the regions. We can immediately see that the Western region appears to be unique with intentional drug mortality rates peaking with low unintentional drug mortality rates. The remaining three regions appear to be similar, although there definitely appears to be some differentiation. 
 ```{r}
 
-ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate), 
+temp <- HealthData_region
+temp$Region <- factor(temp$region, levels = c('Northeast', 'Midwest', 'West', 'South'))
 
-                          y = DrugMortalityRate, fill = region)) +
-  geom_col() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(y = 'Drug Mortality Rate per 10000', x = 'State', title = 'Drug Mortality Rate per 10000')
+ggplot(temp, aes(x = unint_DrugMortalityRate, 
+                              y = int_DrugMortalityRate, color = Region)) +
+  geom_point() + 
+  labs(x = 'Unintentional Drug Mortality Rate', 
+       y = 'Intentional Drug Mortality Rate', 
+       title = 'Unintentional vs Intentional Drug Mortality Rates (per 100,000)') +
+  facet_wrap(~Region, nrow = 1)
+
 ```
+
+Now that we've processed the individual rates, perhaps it's time to look more specifically at the states. By ordering the combined rates (intentional + unintentional) we can see which states are more affected than others. For example, we can clearly see that West Virginia is an outlier. The regions appear to be fairly well mixed as well. 
 ```{r}
-ggplot(HealthData_region, aes(x = reorder(State, -unint_DrugMortalityRate), 
-                          y = unint_DrugMortalityRate, fill = region)) +
-  geom_col() +
+
+testing <- HealthData_region$State
+p <-
+  ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate),
+                                y = DrugMortalityRate)) +
+  geom_col(data = HealthData_region, aes(fill = region)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(y = 'Drug Mortality Rate per 10000', x = 'State', 
-       title = 'Unintentional Drug Mortality Rate per 10000')
+  labs(y = 'Combined Drug Mortality Rate per 100,000', 
+       x = 'State', title = 'Combined Drug Mortality Rate per 100,000 by State') 
+
+p +
+  geom_point(data = unintdeath, aes(x = State, y = unint_DrugMortalityRate)) +
+  geom_point(data = intdeath, aes(x = State, y = int_DrugMortalityRate)) 
 ```
 
-
+Next we want to examine the influence of per capita Health Expenditures on the overall Drug Mortality rate. By subsetting into regions, we can immediately see that there is no immediate linear trend. We will need to investigate further to see what factors influence the various rates. 
+```{r}
+ggplot(HealthData_region, aes(x = HealthExpenditure, y = DrugMortalityRate,  color = region)) +
+  geom_point() +
+  xlim(0, 650) +
+  ylim(0, 50) +
+  facet_wrap(~region, nrow = 1) +
+  labs(x = 'Health Expenditure per Capita ($)', 
+       y = 'Drug Mortality Rate (per 100,000)', 
+       title = 'Drug Mortality Rate vs Health Expenditures by Region')
+```
 
 ## Regression Models/Supervised Learning
 
