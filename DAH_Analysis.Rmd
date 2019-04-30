@@ -17,11 +17,8 @@ library(leaps)
 library(rpart)
 library(partykit)
 library(caret)
-<<<<<<< HEAD
 library(biglm)
-=======
 library(randomForest)
->>>>>>> cdaf99e521dee87f7ecb6ee304491621ddcea3ef
 #library(sparklyr)
 
 # load data
@@ -217,7 +214,6 @@ Sourced from : https://www.businessinsider.com/united-states-regions-new-england
 
 ```{r}
 # Attaching region to dataset
-# Only concern is NA
 
 HealthData_region <- 
   HealthData %>%
@@ -236,26 +232,21 @@ HealthData_region <-
 ```
 
 ```{r}
-<<<<<<< HEAD
-ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate), 
-=======
-Mortality_asc <-
-  HealthData_region %>%
-  arrange(desc(DrugMortalityRate))
 
-ggplot(Mortality_asc, aes(x = reorder(State, -DrugMortalityRate), 
->>>>>>> cdaf99e521dee87f7ecb6ee304491621ddcea3ef
+ggplot(HealthData_region, aes(x = reorder(State, -DrugMortalityRate), 
+
                           y = DrugMortalityRate, fill = region)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(y = 'Drug Mortality Rate per 10000')
+  labs(y = 'Drug Mortality Rate per 10000', x = 'State', title = 'Drug Mortality Rate per 10000')
 ```
 ```{r}
 ggplot(HealthData_region, aes(x = reorder(State, -unint_DrugMortalityRate), 
                           y = unint_DrugMortalityRate, fill = region)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(y = 'Drug Mortality Rate per 10000')
+  labs(y = 'Drug Mortality Rate per 10000', x = 'State', 
+       title = 'Unintentional Drug Mortality Rate per 10000')
 ```
 
 
@@ -266,10 +257,6 @@ ggplot(HealthData_region, aes(x = reorder(State, -unint_DrugMortalityRate),
 form <- 
   DrugMortalityRate ~ HealthExpenditure + PercentBachelor + PovertyPctAll + UnemploymentRate
 ```
-
-
-
-
 
 ### Null Model
 
@@ -383,6 +370,106 @@ Generally, we learned that the unemployment rate and education level (the percen
 ## Unsupervised Learning
 
 
+```{r}
+HealthData_pca <- 
+  HealthData_region %>%
+  select(-c('State', 'region', 'DrugDeaths', 'DrugMortalityRate', 'Midwest', 'Northeast',
+            'South', 'West', 'PercentAssoc', 'Unemployed', 'PovertyCountAll')) %>%
+  na.omit() %>%
+  prcomp(scale = TRUE)  
+
+str(HealthData_pca)
+```
+
+```{r}
+(-1) * HealthData_pca$rotation[, 1:2] %>% round(2)
+```
+
+```{r}
+
+names <- na.omit(HealthData_region)
+Region <- names$region
+
+HealthData_pca$x %>%
+  as.data.frame() %>%  
+  rownames_to_column() %>%
+  ggplot(aes(x = PC1, y = PC2)) + 
+  geom_text(aes(label = names$State), size = 3) + 
+  xlab("Best Vector from PCA (approx. Intentional Self-Poisoning Rate") + 
+  ylab("2nd Best Vector from PCA (approx. Education)") + 
+  ggtitle("Two-dimensional representation of Drug Mortality by State")
+
+HealthData_pca$x %>%
+  as.data.frame() %>%  
+  ggplot(aes(x = PC1, y = PC2)) + 
+  geom_point(aes(color = Region), size = 3) + 
+  xlab("Best Vector from PCA (approx. Intentional Self-Poisoning Rate") + 
+  ylab("2nd Best Vector from PCA (approx. Education)") + 
+  ggtitle("Two-dimensional representation of Drug Mortality by Region")
+```
+
+```{r}
+
+HealthData_pve <- 
+  data.frame(sd = HealthData_pca$sdev) %>%
+  rownames_to_column() %>%
+  mutate(rowname = parse_number(rowname), 
+         totalVar = sum(HealthData_pca$sdev^2), 
+         pve = 100 * sd^2 / totalVar, 
+         cusum = cumsum(pve))
+
+# scree plot
+HealthData_pve %>%
+  ggplot(aes(x = rowname, y = pve)) + 
+  geom_line(type = 3) + 
+  xlab("Principal Component") + 
+  ylab("Proportion of Variance Explained") + 
+  ggtitle("Scree Plot of Principal Components for Health Data") 
+
+  
+# cumulative PVE plot
+HealthData_pve %>%
+  ggplot(aes(x = rowname, y = cusum)) + 
+  geom_line(type = 3) + 
+  xlab("Principal Component") + 
+  ylab("Proportion of Variance Explained") + 
+  ggtitle("Cumulative Proportion of Variance Explained for Health Data") 
+
+```
+
+```{r}
+
+HD_std <- 
+  HealthData_region %>%
+  select(c(int_DrugMortalityRate, unint_DrugMortalityRate, HealthExpenditure)) %>%
+  na.omit() %>%
+  scale() %>%
+  as.data.frame()
+
+colnames(HealthData_region)
+
+```
+
+```{r}
+
+HD_dist <- dist(HD_std)
+# # plot dedrogram (average linkage)
+# NCI_dist %>%
+#   hclust(method = "average") %>%
+#   plot(cex = 0.9, labels = cancerLabels, main = "NCI60 Dendogram with Average Linkage")
+# construct dendogram (complete linkage)
+HD_dendo <-
+  HD_dist %>%
+  hclust(method = "complete")
+# print dendogram info (distance & method)
+print(HD_dendo)
+
+
+HD_dendo %>%
+  plot(cex = 0.9, labels = HealthData_region$State, lwd = 2,
+       main = "Health Data Dendogram with Complete Linkage")
+
+```
 
 ## Big Data Tools
 
