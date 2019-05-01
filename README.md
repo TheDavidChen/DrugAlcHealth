@@ -8,7 +8,7 @@ Drug Related Mortality Rates (2016): https://wonder.cdc.gov/mortSql.html
 
 - Accidental: X40-X45 (Drug and Alcohol)
 - Intentional: X60-X65 (Drug and Alcohol)
-- Per 10000
+- Per 100000
 
 Health Expenditure Data (2016): https://slfdqs.taxpolicycenter.org/pages.cfm
 
