@@ -511,7 +511,7 @@ HD_dendo %>%
 HD_dendoClusters <- cutree(tree = HD_dendo, k = 4)
 ```
 
-After creating the Dendogram, we also want to Performing a k-means Clustering with 4 clusters to see if we will see similar results. Assuming all goes according to intuition, these two methods should result in extremely similar clusters. 
+After creating the Dendogram, we also want to performing a k-means Clustering with 4 clusters to see if we will see similar results. Assuming all goes according to intuition, these two methods should result in extremely similar clusters. 
 ```{r}
 set.seed(14)
 
