@@ -2,7 +2,9 @@
 title: 'Final Project: Guidance Document'
 author: "David Chen & Deric Liang"
 date: "Due April 30, 2019"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 # Purpose
