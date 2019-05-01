@@ -92,8 +92,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -102,14 +108,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -138,9 +204,9 @@ drugmort &lt;-
   select(-Notes, -`State Code`) %&gt;%
   mutate(Deaths = as.numeric(Deaths)) %&gt;%
   rename(DrugDeaths = Deaths,
-         DrugMortalityRate = `Crude Rate`)</code></pre>
-<pre><code>## Warning: package 'bindrcpp' was built under R version 3.4.4</code></pre>
-<pre class="r"><code># Education Level Data
+         DrugMortalityRate = `Crude Rate`)
+
+# Education Level Data
 ### Clean headers, select for state data, select relevant columns
 educ &lt;-
   educ_raw %&gt;%
@@ -438,13 +504,13 @@ regtreecv</code></pre>
 ## 
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 45, 43, 44, 46, 43, 43, ... 
+## Summary of sample sizes: 43, 43, 43, 46, 45, 43, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   cp          RMSE      Rsquared   MAE     
-##   0.02985391  9.336295  0.1454698  7.829917
-##   0.06236531  8.629725  0.2453146  7.309257
-##   0.11452540  9.021535  0.1523789  7.478628
+##   0.02985391  9.096318  0.2530172  7.482665
+##   0.06236531  8.822621  0.3412258  7.456256
+##   0.11452540  9.176424  0.3592473  7.701120
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was cp = 0.06236531.</code></pre>
@@ -464,13 +530,13 @@ forestcv</code></pre>
 ## 
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 44, 45, 43, 43, 45, 45, ... 
+## Summary of sample sizes: 45, 44, 43, 43, 44, 44, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   mtry  RMSE      Rsquared   MAE     
-##   2     9.560798  0.2005119  7.946622
-##   3     9.724776  0.2009271  8.129483
-##   4     9.796124  0.2102996  8.166748
+##   2     9.555660  0.2578753  7.895193
+##   3     9.617666  0.2176216  7.965614
+##   4     9.639517  0.2300918  7.942663
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was mtry = 2.</code></pre>
@@ -482,10 +548,10 @@ importance(trainforest) %&gt;%
   rownames_to_column() %&gt;%
   arrange(desc(IncNodePurity))</code></pre>
 <pre><code>##             rowname IncNodePurity
-## 1   PercentBachelor     1068.8031
-## 2  UnemploymentRate      897.3587
-## 3     PovertyPctAll      725.5626
-## 4 HealthExpenditure      514.5998</code></pre>
+## 1   PercentBachelor      961.3863
+## 2  UnemploymentRate      878.2969
+## 3     PovertyPctAll      707.7052
+## 4 HealthExpenditure      587.5964</code></pre>
 <p>The Random Forest (with mtry = 2) gives an R-squared of 0.1924, worse than the regression tree but better than the other models. This model states that the percent of people with a Bachelors is the most important predictor of drug mortality rate, followed by unemployment rate, then percent of people in poverty, then health expenditure. This is consistent with what we have found in previous models, and is important to see as the biggest question in exploring this data was to see whether health expenditure affected drug mortality rates, and here we see it is not as important as other factors.</p>
 </div>
 <div id="supervised-learning-summary" class="section level3">
