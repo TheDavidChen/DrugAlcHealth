@@ -438,13 +438,13 @@ regtreecv</code></pre>
 ## 
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 45, 44, 44, 44, 45, 44, ... 
+## Summary of sample sizes: 45, 44, 44, 45, 44, 44, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   cp          RMSE      Rsquared   MAE     
-##   0.02985391  9.355480  0.2198993  7.762266
-##   0.06236531  8.703735  0.3016685  7.119466
-##   0.11452540  9.099445  0.2905060  7.409813
+##   0.02985391  8.800514  0.2167946  7.524869
+##   0.06236531  8.384315  0.2491390  7.140952
+##   0.11452540  8.831942  0.1248191  7.387272
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was cp = 0.06236531.</code></pre>
@@ -464,13 +464,13 @@ forestcv</code></pre>
 ## 
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 43, 43, 45, 43, 45, 44, ... 
+## Summary of sample sizes: 45, 45, 43, 44, 44, 44, ... 
 ## Resampling results across tuning parameters:
 ## 
 ##   mtry  RMSE      Rsquared   MAE     
-##   2     9.879892  0.3481826  8.201797
-##   3     9.946099  0.3684382  8.310679
-##   4     9.897204  0.3501130  8.256642
+##   2     9.452034  0.1438346  7.661994
+##   3     9.561506  0.1264941  7.778618
+##   4     9.658412  0.1217725  7.866764
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was mtry = 2.</code></pre>
@@ -482,10 +482,10 @@ importance(trainforest) %&gt;%
   rownames_to_column() %&gt;%
   arrange(desc(IncNodePurity))</code></pre>
 <pre><code>##             rowname IncNodePurity
-## 1   PercentBachelor     1075.2634
-## 2  UnemploymentRate      844.4981
-## 3     PovertyPctAll      748.0828
-## 4 HealthExpenditure      511.6930</code></pre>
+## 1   PercentBachelor     1025.0266
+## 2  UnemploymentRate      922.8230
+## 3     PovertyPctAll      755.0352
+## 4 HealthExpenditure      497.0490</code></pre>
 <p>The Random Forest (with mtry = 2) gives an R-squared of 0.1924, worse than the regression tree but better than the other models. This model states that the percent of people with a Bachelors is the most important predictor of drug mortality rate, followed by unemployment rate, then percent of people in poverty, then health expenditure. This is consistent with what we have found in previous models, and is important to see as the biggest question in exploring this data was to see whether health expenditure affected drug mortality rates, and here we see it is not as important as other factors.</p>
 </div>
 <div id="supervised-learning-summary" class="section level3">
@@ -622,9 +622,6 @@ HD_kmeanClusters &lt;- HD_kmean$cluster</code></pre>
 </div>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
-<blockquote>
-<p>Motivation</p>
-</blockquote>
 <p>Entering this project we wanted to develop a deeper understanding of what variables are influential in predicting drug and alcohol overdose deaths, as well as any potential differentiation between states. Through the use of supervised and unsupervised learning techniques we leave with a basic picture of the current drug and alcohol overdose situation, however much more analysis is needed to truly understand the epidemic.</p>
 <p>In consideration of limitations, in the data source some of the states had missing data, resulting in the crude rates being marked as unreliable. We also did not account for changes over time, thus failing to account for the influence of health expenditures on overdose rates.</p>
 <p>Moving forward beyond our preliminary analysis there is room for much more. Firstly, this data can be processed over time, examining how drug overdose rates have changed over the past few years. By isolating Health Expenditures and breaking down the spending further, we can develop a much stronger understanding of how spending relates to drug overdose rates. We can also add more state level variables such as urbanization rates, pharmaceutical spending, and incarceration rates to try and develop a stronger model. With enough data collection it could be possible to develop a time series model to begin predicting drug overdose rates and what predictors are the most important.</p>
