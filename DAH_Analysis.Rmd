@@ -5,7 +5,9 @@ date: "04/30/2019"
 output: html_document
 ---
 
-In this project, we use classical regression models and supervised learning methods to link health expenditure, among other variables, by state and state census data to drug and alcohol overdose deaths. In exploring this relationship, we seek to understand whether the amount of funds invested in the health of citizens plays a role in preventing deaths from drugs and make recommendations on whether states which see more drug deaths should consider increasing health expenditures. Data sources can be found in the README.md file.
+In recent times drug overdoses within the United Stateshave been on the rise, capturing the attention of local and national media. In an attempt to help understand this crisis, we will be attempting to use classical regression models and supervised learning methods to link state health expenditure and census variables to drug and alcohol overdose deaths (more specifically intentional and unintentional self-poisoning deaths). In exploring this relationship, we seek to understand what variables are most influential in predicting overdose rates, directing future investigation into this subject. We also aim to understand the similarities between states, testing to see if the regions designated by the US Census Bureau are reflected within the data. 
+
+Data sources can be found in the README.md file.
 
 ```{r message = FALSE, include = FALSE}
 # Clean up R environment
@@ -549,7 +551,25 @@ Looking at the dendogram by region we can immediately start to see some differnt
 Entering the unsupervised learning section we wanted to examine if there are any distinct clusters within the data, especially if it matches with the US Census Bureau regions or not. From our Dendogram and K-means analysis we found that the created clusters do seem to isolate one or two regions, indicating that there likely is some difference between regions, albeit slight at times. From our PCA analysis we found that two principal components accounted for a majority of the variance, approximately represented by intentional drug self-poisoning rates and education levels. Moving forward we can dive deeper into the relationship regions have with state drug mortality rates as well their differing qualities.  
 
 
-
 ## Conclusions
+
+Entering this project we wanted to develop a deeper understanding of what variables are influential in predicting drug and alcohol overdose deaths, as well as any potential differentiation between states. Through the use of supervised and unsupervised learning techniques we leave with a basic picture of the current drug and alcohol overdose situation, however much more analysis is needed to truly understand the epidemic. 
+
+In consideration of limitations, in the data source some of the states had missing data, resulting in the crude rates being marked as unreliable. We also did not account for changes over time, thus failing to account for the influence of health expenditures on overdose rates. 
+
+Moving forward beyond our preliminary analysis there is room for much more. Firstly, this data can be processed over time, examining how drug overdose rates have changed over the past few years. By isolating Health Expenditures and breaking down the spending further, we can develop a much stronger understanding of how spending relates to drug overdose rates. We can also add more state level variables such as urbanization rates, pharmaceutical spending, and incarceration rates to try and develop a stronger model. With enough data collection it could be possible to develop a time series model to begin predicting drug overdose rates and what predictors are the most important.  
+
+With drug overdose rates seemingly increasing each year, much more analysis is required to truly understand this rising epidemic. While this report won't be the one to change the tide, we hope that it has helped demonstrate the complexity of the issue, potentially even challenging the reader to explore the relationships missed here. 
+
+
+
+
+
+
+
+
+
+
+
 
 
